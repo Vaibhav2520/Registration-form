@@ -6,13 +6,15 @@
 .body-container{
     display: flex;
     justify-content: center;
+    padding: 5%;
 }
 
-.form-container{
-    text-align: right;
+.grid-container{
+    display: flex;
+    align-items: center;
     
 }
 
 .form-field{
-    
+    width: 50%;
 }
