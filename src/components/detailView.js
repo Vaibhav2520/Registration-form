@@ -41,6 +41,7 @@ const DetailView = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
   return (
     <div>

@@ -10,9 +10,7 @@ import { fetchPost } from "../firestore/readCandidates";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+
 
 const ListView = () => {
   const [candidateData, setCandidateData] = useState([]);
