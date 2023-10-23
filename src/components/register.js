@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import {
+  Alert,
   Button,
   Checkbox,
   FormControl,
@@ -22,6 +23,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import "../styles/register.scss";
+import { insertCandidate } from "../firestore/insertCandidate";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -37,16 +39,42 @@ const VisuallyHiddenInput = styled("input")({
 
 const Register = () => {
   // State and other logic can be added here
-  const [age, setAge] = React.useState("");
+  const [candidate, setCandidate] = useState({
+    name: "",
+    dob: "",
+    gender: "",
+    hobbies: [],
+    state: "",
+    address: "",
+    resume: "",
+  });
+  const [showAlert, setShowAlert] = useState(false);
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    insertCandidate(candidate);
+    setShowAlert(true);
+  };
+
+  const addHobbies = (hobby) => {
+    let hobbies = [...candidate.hobbies];
+    if (!hobbies.includes(hobby)) {
+      hobbies.push(hobby);
+    } else {
+      hobbies = hobbies.filter((h) => h !== hobby);
+    }
+    setCandidate({ ...candidate, hobbies: hobbies });
   };
   return (
     <div>
       <div className="heading-container">
         <Typography variant="h2">Register</Typography>
       </div>
+      {showAlert && (
+        <Alert className="alert-box" onClose={() => setShowAlert(false)}>
+          Candidate added to database!
+        </Alert>
+      )}
       <div className="body-container">
         <Grid
           container
@@ -62,16 +90,24 @@ const Register = () => {
               id="outlined-basic"
               variant="outlined"
               className="form-field"
+              onChange={(e) =>
+                setCandidate({ ...candidate, name: e.target.value })
+              }
             />
           </Grid>
           {/* row ends */}
           <Grid item xs={3}>
-            <Typography className="form-container">Date</Typography>
+            <Typography className="form-container">DOB</Typography>
           </Grid>
           <Grid item xs={3}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DateTimePicker"]}>
-                <DateTimePicker label="Basic date time picker" />
+                <DateTimePicker
+                  label="Basic date time picker"
+                  onChange={(e) =>
+                    setCandidate({ ...candidate, dob: e.toDate() })
+                  }
+                />
               </DemoContainer>
             </LocalizationProvider>
           </Grid>
@@ -84,6 +120,9 @@ const Register = () => {
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
+                onChange={(e) =>
+                  setCandidate({ ...candidate, gender: e.target.value })
+                }
               >
                 <FormControlLabel
                   value="female"
@@ -108,20 +147,25 @@ const Register = () => {
             <Typography className="form-container">Hobbies</Typography>
           </Grid>
           <Grid item xs={3}>
-            <FormGroup aria-label="position" row>
+            <FormGroup
+              aria-label="position"
+              row
+              onChange={(e) => addHobbies(e.target.value)}
+            >
               <FormControlLabel
                 control={<Checkbox />}
                 label="FootBall"
+                value="Football"
               />
               <FormControlLabel
                 control={<Checkbox />}
                 label="Cricket"
+                value="Cricket"
               />
-              
             </FormGroup>
           </Grid>
           <Grid item xs={3}>
-            <Typography className="form-container">Hobbies</Typography>
+            <Typography className="form-container">States</Typography>
           </Grid>
           <Grid item xs={3}>
             <FormControl fullWidth>
@@ -129,23 +173,30 @@ const Register = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
-                label='States'
-                onChange={handleChange}
+                value={candidate.state}
+                label="States"
+                onChange={(e) =>
+                  setCandidate({ ...candidate, state: e.target.value })
+                }
               >
-                <MenuItem value={10}>Karnataka</MenuItem>
-                <MenuItem value={20}>Maharashtra</MenuItem>
-                <MenuItem value={30}>Rajasthan</MenuItem>
+                <MenuItem value={"Karnataka"}>Karnataka</MenuItem>
+                <MenuItem value={"Maharashtra"}>Maharashtra</MenuItem>
+                <MenuItem value={"Rajasthan"}>Rajasthan</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-
           {/* row ends */}
           <Grid item xs={3}>
             <Typography className="form-container">Address</Typography>
           </Grid>
           <Grid item xs={3}>
-            <TextareaAutosize aria-label="minimum height" minRows={3} />
+            <TextareaAutosize
+              onChange={(e) =>
+                setCandidate({ ...candidate, address: e.target.value })
+              }
+              aria-label="minimum height"
+              minRows={3}
+            />
           </Grid>
           <Grid item xs={3}>
             <Typography className="form-container">Resume</Typography>
@@ -162,7 +213,11 @@ const Register = () => {
           </Grid>
           <Grid item xs={3}></Grid>
           <Grid item xs={3}>
-            <Button variant="contained" style={{ marginTop: "3em" }}>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              style={{ marginTop: "3em" }}
+            >
               Submit
             </Button>
           </Grid>

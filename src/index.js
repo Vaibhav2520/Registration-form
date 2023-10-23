@@ -8,16 +8,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        
-          {/* <Route index element={<Home />} /> */}
-          <Route path="register" element={<Register />} />
-          <Route path="listView" element={<ListView/>} />
-          <Route path="detailView" element={<DetailView/>} />
-      
+        <Route path="register" element={<Register />} />
+        <Route path="" element={<ListView />} />
+        <Route exact path="detailView/:id" element={<DetailView />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);

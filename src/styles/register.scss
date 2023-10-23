@@ -1,20 +1,24 @@
-.heading-container{
+.heading-container {
     display: flex;
     justify-content: center;
 }
 
-.body-container{
+.body-container {
     display: flex;
     justify-content: center;
     padding: 5%;
 }
 
-.grid-container{
+.grid-container {
     display: flex;
     align-items: center;
-    
 }
 
-.form-field{
+.form-field {
     width: 50%;
+}
+
+.alert-box {
+    width: 50%;
+    margin: 0 auto;
 }
