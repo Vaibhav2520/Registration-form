@@ -2,24 +2,11 @@ import React from 'react';
 import Typography from "@mui/material/Typography";
 import {
   Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
   Grid,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
   styled,
-  TextareaAutosize,
 
 } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import "../styles/register.scss";
 
@@ -36,15 +23,13 @@ const VisuallyHiddenInput = styled("input")({
   });
   const DetailView = () => {
     // State and other logic can be added here
-    const [age, setAge] = React.useState("");
+   
   
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
+    
     return (
-      <div>
+        <div>
         <div className="heading-container">
-          <Typography variant="h2">Register</Typography>
+          <Typography variant="h2">Candidate Details</Typography>
         </div>
         <div className="body-container">
           <Grid
@@ -80,23 +65,12 @@ const VisuallyHiddenInput = styled("input")({
              Cricket
             </Grid>
             <Grid item xs={3}>
-              <Typography className="form-container">Hobbies</Typography>
+              <Typography className="form-container">State</Typography>
             </Grid>
             <Grid item xs={3}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">States</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  label='States'
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Karnataka</MenuItem>
-                  <MenuItem value={20}>Maharashtra</MenuItem>
-                  <MenuItem value={30}>Rajasthan</MenuItem>
-                </Select>
-              </FormControl>
+              <Typography>
+                Karnataka
+              </Typography>
             </Grid>
   
             {/* row ends */}
@@ -104,7 +78,9 @@ const VisuallyHiddenInput = styled("input")({
               <Typography className="form-container">Address</Typography>
             </Grid>
             <Grid item xs={3}>
-              <TextareaAutosize aria-label="minimum height" minRows={3} />
+             <Typography>
+                test
+             </Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography className="form-container">Resume</Typography>
@@ -119,18 +95,7 @@ const VisuallyHiddenInput = styled("input")({
                 <VisuallyHiddenInput type="file" />
               </Button>
             </Grid>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={3}>
-              <Button variant="contained" style={{ marginTop: "3em" }}>
-                Submit
-              </Button>
-            </Grid>
-            <Grid item xs={3}>
-              <Button variant="contained" style={{ marginTop: "3em" }}>
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item xs={3}></Grid>
+            
           </Grid>
         </div>
       </div>
